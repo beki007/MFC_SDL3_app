@@ -173,6 +173,46 @@ void CMainFrame::CreateSDLWindow()
 			TRACE("SDL window created successfully!\n");
 		}
 	}
+
+	SDL_Event event;
+	bool menuClosed = false;
+	while (!menuClosed)
+	{
+		// Wait for events (blocks until event received)
+		if (SDL_WaitEvent(&event))
+		{
+			switch (event.type)
+			{
+				case SDL_EVENT_KEY_DOWN:
+				{
+					// Handle keyboard input (like Qt WM_KEYDOWN)
+					SDL_Keycode key = event.key.key;
+
+					if (key == SDLK_ESCAPE)
+					{
+						menuClosed = true;
+					}
+					else if (key == SDLK_RETURN)
+					{
+						// TODO: Select current menu item
+						menuClosed = true;
+					}
+					break;
+				}
+				case SDL_EVENT_MOUSE_BUTTON_UP:
+				{
+					OutputDebugString(L"SDL_EVENT_MOUSE_BUTTON_UP\n");
+					break;
+				}
+				case SDL_EVENT_MOUSE_BUTTON_DOWN:
+				{
+					OutputDebugString(L"SDL_EVENT_MOUSE_BUTTON_DOWN\n");
+					break;
+				}
+
+			}
+		}
+	}
 }
 
 void CMainFrame::OnLButtonDown(UINT nFlags, CPoint point)
